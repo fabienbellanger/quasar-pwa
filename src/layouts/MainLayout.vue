@@ -2,7 +2,7 @@
     <q-layout view="lHh Lpr lFf">
         <q-header elevated>
             <q-toolbar>
-                <q-toolbar-title> Quasar App </q-toolbar-title>
+                <q-toolbar-title>Quasar PWA App Example</q-toolbar-title>
 
                 <div>Quasar v{{ $q.version }}</div>
             </q-toolbar>
@@ -19,7 +19,6 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'MainLayout',
-
     components: {},
 
     setup() {
