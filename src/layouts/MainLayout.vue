@@ -1,5 +1,5 @@
 <template>
-    <q-layout view="lHh Lpr lFf">
+    <q-layout view="hHh lpr fFf">
         <q-header elevated>
             <q-toolbar>
                 <q-toolbar-title>Quasar PWA App Example 25</q-toolbar-title>
@@ -11,6 +11,8 @@
         <q-page-container>
             <router-view />
         </q-page-container>
+
+        <q-footer> </q-footer>
     </q-layout>
 </template>
 
@@ -23,10 +25,14 @@ export default defineComponent({
     components: {},
 
     setup() {
+        // Variables
+        // ---------
         const $q = useQuasar();
         const updateExists = ref(false);
         const registration = ref<ServiceWorkerRegistration>();
 
+        // Functions
+        // ---------
         const updateAvailable = (event: Event) => {
             registration.value = (event as CustomEvent).detail;
             updateExists.value = true;
@@ -45,11 +51,13 @@ export default defineComponent({
                 ],
             });
         };
+
         const serviceWorkersUpdate = () => {
             document.addEventListener('swUpdated', updateAvailable, {
                 once: true,
             });
         };
+
         const refreshApp = () => {
             if (updateExists.value) {
                 updateExists.value = false;
@@ -59,6 +67,8 @@ export default defineComponent({
             }
         };
 
+        // Run
+        // ---
         serviceWorkersUpdate();
 
         return {};

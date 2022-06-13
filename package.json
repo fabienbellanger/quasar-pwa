@@ -8,6 +8,7 @@
     "scripts": {
         "dev": "quasar dev",
         "dev-pwa": "quasar dev -m pwa",
+        "dev-electron": "quasar dev -m electron",
         "build": "quasar build",
         "build-pwa": "quasar build -m pwa",
         "lint": "eslint --ext .js,.ts,.vue ./",
@@ -27,6 +28,7 @@
         "@typescript-eslint/eslint-plugin": "^5.10.0",
         "@typescript-eslint/parser": "^5.10.0",
         "autoprefixer": "^10.4.2",
+        "electron": "^19.0.4",
         "eslint": "^8.10.0",
         "eslint-config-prettier": "^8.1.0",
         "eslint-plugin-vue": "^9.1.0",

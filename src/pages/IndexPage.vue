@@ -5,6 +5,7 @@
             <q-card-section>
                 <div class="text-h6">LocalForage</div>
             </q-card-section>
+
             <q-card-section>
                 <q-input
                     v-model="localForageInput"
@@ -12,7 +13,7 @@
                     clearable
                 />
                 <br />
-                {{ localForageValue }}
+                Value: <b>{{ localForageValue }}</b>
             </q-card-section>
 
             <q-separator />
@@ -31,31 +32,37 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import localforage from 'localforage';
+import Storage from '../utils/Storage';
 
 export default defineComponent({
     name: 'IndexPage',
     components: {},
 
     setup() {
+        // Variables
+        // ---------
         const localForageValue = ref<string>('...');
         const localForageInput = ref<string>('');
 
+        // Functions
+        // ---------
         const setLocalForageValue = () => {
+            const item = new Storage({ name: localForageInput.value });
+
             localforage
-                .setItem('key', { name: localForageInput.value })
+                .setItem('key', item)
                 .then((value) => {
-                    localForageValue.value = value.name;
-                    console.log(`localforage setItem OK => ${value.name}`);
+                    localForageValue.value = value.data.name;
                 })
                 .catch((err) => {
                     console.error(err);
                 });
+
             localforage
                 .getItem('key')
                 .then((value) => {
                     /*eslint-disable @typescript-eslint/no-explicit-any*/
                     localForageValue.value = (value as any).name as string;
-                    console.log(value);
                 })
                 .catch((err) => {
                     console.log(err);
