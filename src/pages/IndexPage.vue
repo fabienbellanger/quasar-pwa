@@ -47,26 +47,37 @@ export default defineComponent({
         // Functions
         // ---------
         const setLocalForageValue = () => {
-            const item = new Storage({ name: localForageInput.value });
+            if (localForageInput.value !== '') {
+                const item = new Storage({ name: localForageInput.value });
 
-            localforage
-                .setItem('key', item)
-                .then((value) => {
-                    localForageValue.value = value.data.name;
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
+                localforage
+                    .setItem('key', item)
+                    .then((value: Storage) => {
+                        console.log('value', value, typeof value);
+                        const data = value.data;
+                        if (data) {
+                            localForageValue.value = data.name;
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
 
-            localforage
-                .getItem('key')
-                .then((value) => {
-                    /*eslint-disable @typescript-eslint/no-explicit-any*/
-                    localForageValue.value = (value as any).name as string;
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                localforage
+                    .getItem('key')
+                    .then((value) => {
+                        const data = (value as Storage).data;
+
+                        console.log('data', data, 'value', value, typeof value);
+
+                        if (data) {
+                            localForageValue.value = data.name;
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
         };
 
         return {
