@@ -1,7 +1,17 @@
 <template>
     <q-page class="row items-center justify-evenly">
-        <q-card class="my-card">
+        <!-- LocalForage -->
+        <q-card class="localForage-card">
             <q-card-section>
+                <div class="text-h6">LocalForage</div>
+            </q-card-section>
+            <q-card-section>
+                <q-input
+                    v-model="localForageInput"
+                    label="Enter a text..."
+                    clearable
+                />
+                <br />
                 {{ localForageValue }}
             </q-card-section>
 
@@ -11,7 +21,7 @@
                 <q-btn
                     color="secondary"
                     label="Set value with localForage"
-                    @click="setValue"
+                    @click="setLocalForageValue"
                 ></q-btn>
             </q-card-actions>
         </q-card>
@@ -28,10 +38,11 @@ export default defineComponent({
 
     setup() {
         const localForageValue = ref<string>('...');
+        const localForageInput = ref<string>('');
 
-        const setValue = () => {
+        const setLocalForageValue = () => {
             localforage
-                .setItem('key', { name: 'Coucou' })
+                .setItem('key', { name: localForageInput.value })
                 .then((value) => {
                     localForageValue.value = value.name;
                     console.log(`localforage setItem OK => ${value.name}`);
@@ -52,8 +63,9 @@ export default defineComponent({
         };
 
         return {
-            setValue,
+            setLocalForageValue,
             localForageValue,
+            localForageInput,
         };
     },
 });

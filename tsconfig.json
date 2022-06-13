@@ -20,6 +20,7 @@
         "src/**/*.vue",
         "src-pwa/*.d.ts",
         "src-bex/*.d.ts",
-        "src-ssr/*.d.ts"
+        "src-ssr/*.d.ts",
+        "src/mixins/update.js"
     ]
 }

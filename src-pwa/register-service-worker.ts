@@ -1,10 +1,11 @@
 import { register } from 'register-service-worker';
+// import { env } from 'process';
 
 // The ready(), registered(), cached(), updatefound() and updated()
 // events passes a ServiceWorkerRegistration instance in their arguments.
 // ServiceWorkerRegistration: https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration
 
-register(process.env.SERVICE_WORKER_FILE, {
+register(process.env.SERVICE_WORKER_FILE as string, {
     // The registrationOptions object will be passed as the second argument
     // to ServiceWorkerContainer.register()
     // https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerContainer/register#Parameter
@@ -27,8 +28,12 @@ register(process.env.SERVICE_WORKER_FILE, {
         console.log('New content is downloading.');
     },
 
-    updated(/* registration */) {
+    updated(registration) {
+        // https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip
         console.log('New content is available; please refresh.');
+        document.dispatchEvent(
+            new CustomEvent('swUpdated', { detail: registration })
+        );
     },
 
     offline() {
@@ -37,7 +42,7 @@ register(process.env.SERVICE_WORKER_FILE, {
         );
     },
 
-    error(/* err */) {
+    error(err) {
         console.error('Error during service worker registration:', err);
     },
 });
