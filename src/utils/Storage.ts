@@ -22,17 +22,28 @@ export default class Storage {
         const now = new Date();
 
         this._validityDatetime = date.addToDate(now, { hours: CACHE_DURATION });
-        this._data = d;
+        this._data = d === undefined ? null : d;
+    }
+
+    /**
+     * Return a Storage object from standard Object
+     *
+     * @author Fabien Bellanger
+     * @param obj any
+     * @returns
+     */
+    static from(obj: any): Storage {
+        return Object.assign(new Storage(), obj);
     }
 
     /**
      * Set validy date
      *
      * @author Fabien Bellanger
-     * @param d Date
+     * @param date Date
      */
-    set validity(d: Date) {
-        this._validityDatetime = d;
+    set validity(date: Date) {
+        this._validityDatetime = date;
     }
 
     /**

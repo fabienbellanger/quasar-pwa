@@ -49,11 +49,9 @@ export default defineComponent({
         const setLocalForageValue = () => {
             if (localForageInput.value !== '') {
                 const item = new Storage({ name: localForageInput.value });
-
                 localforage
                     .setItem('key', item)
                     .then((value: Storage) => {
-                        console.log('value', value, typeof value);
                         const data = value.data;
                         if (data) {
                             localForageValue.value = data.name;
@@ -66,10 +64,11 @@ export default defineComponent({
                 localforage
                     .getItem('key')
                     .then((value) => {
-                        const data = (value as Storage).data;
-
-                        console.log('data', data, 'value', value, typeof value);
-
+                        // const value1 = Object.assign(new Storage(), value);
+                        const value1 = Storage.from(value);
+                        const data = value1.data;
+                        console.log(value1);
+                        console.log(data);
                         if (data) {
                             localForageValue.value = data.name;
                         }
