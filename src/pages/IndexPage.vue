@@ -1,7 +1,7 @@
 <template>
     <q-page class="row items-center justify-evenly">
         <!-- LocalForage -->
-        <q-card class="localForage-card">
+        <q-card>
             <q-card-section>
                 <div class="text-h6">LocalForage</div>
             </q-card-section>
