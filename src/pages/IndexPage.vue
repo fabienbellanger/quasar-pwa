@@ -24,6 +24,7 @@
                     label="Set value with localForage"
                     @click="setLocalForageValue"
                 ></q-btn>
+                <q-btn @click="ipc_test" label="Test IPC"></q-btn>
             </q-card-actions>
         </q-card>
     </q-page>
@@ -79,10 +80,21 @@ export default defineComponent({
             }
         };
 
+        const ipc_test = () => {
+            console.log('Test IPC');
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).printAPI.test();
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).saleAPI.test();
+        };
+
         return {
             setLocalForageValue,
             localForageValue,
             localForageInput,
+            ipc_test,
         };
     },
 });

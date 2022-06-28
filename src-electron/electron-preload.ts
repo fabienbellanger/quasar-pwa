@@ -15,3 +15,30 @@
  *     doAThing: () => {}
  *   })
  */
+
+import { contextBridge } from 'electron';
+import { ipcRenderer } from 'electron/renderer';
+
+contextBridge.exposeInMainWorld('printAPI', {
+    test: () =>
+        ipcRenderer
+            .invoke('printAPI:test')
+            .then(() => {
+                console.log('Print OK');
+            })
+            .catch((error) => {
+                console.error(error);
+            }),
+});
+
+contextBridge.exposeInMainWorld('saleAPI', {
+    test: () =>
+        ipcRenderer
+            .invoke('saleAPI:test')
+            .then(() => {
+                console.log('Sale OK');
+            })
+            .catch((error) => {
+                console.error(error);
+            }),
+});

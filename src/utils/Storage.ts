@@ -29,7 +29,7 @@ export default class Storage {
      * Return a Storage object from standard Object
      *
      * @author Fabien Bellanger
-     * @param obj any
+     * @param {any} obj
      * @returns
      */
     static from(obj: any): Storage {
@@ -40,7 +40,7 @@ export default class Storage {
      * Set validy date
      *
      * @author Fabien Bellanger
-     * @param date Date
+     * @param {Date} date Date
      */
     set validity(date: Date) {
         this._validityDatetime = date;
@@ -50,7 +50,7 @@ export default class Storage {
      * Get data
      *
      * @author Fabien Bellanger
-     * @return any | null
+     * @return {any | null}
      */
     get data(): any | null {
         const now = new Date();
@@ -65,7 +65,7 @@ export default class Storage {
      * Set data
      *
      * @author Fabien Bellanger
-     * @param data any
+     * @param {any} data
      */
     set data(data: any | null) {
         this.data = data;

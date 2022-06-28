@@ -9,19 +9,23 @@ class Client {
     public ip: string;
     public port: number;
     public name: string;
+    public type: string;
+    public useSSL: boolean;
 
     /**
      * Constructor
      *
      * @author Fabien Bellanger
-     * @param ip string IP
-     * @param port number Port
-     * @param name string Name
+     * @param {string} ip IP
+     * @param {number} port Port
+     * @param {string} name Name
      */
-    constructor(ip: string, port: number, name: string) {
+    constructor(ip: string, port: number, name: string, useSSL: boolean) {
         this.ip = ip;
         this.port = port;
         this.name = name;
+        this.type = 'pos';
+        this.useSSL = useSSL;
     }
 }
 
@@ -41,13 +45,13 @@ interface Clients {
  */
 class SocketServer {
     private _io: Server;
-    public clients: Clients;
+    clients: Clients;
 
     /**
      * Constructor
      *
      * @author Fabien Bellanger
-     * @param port: number Server port
+     * @param {number} port Server port
      */
     constructor(port: number) {
         console.log(`===> Starting Socket Server on port ${port}...`);
@@ -73,7 +77,7 @@ class SocketServer {
      * Add client clients list
      *
      * @author Fabien Bellanger
-     * @param socket Socket Socket
+     * @param {Socket} socket Socket
      */
     private addClient(socket: Socket) {
         socket.emit('get_client');

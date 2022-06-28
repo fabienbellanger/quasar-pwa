@@ -31,6 +31,8 @@ export default defineComponent({
         const updateExists = ref(false);
         const registration = ref<ServiceWorkerRegistration>();
 
+        console.log('Is Electron platform: ' + $q.platform.is.electron);
+
         // Functions
         // ---------
         const updateAvailable = (event: Event) => {

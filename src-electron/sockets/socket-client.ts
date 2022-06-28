@@ -8,14 +8,18 @@ import { Client } from './socket-server';
  */
 export class SocketClient {
     private _socket: Socket;
+    private _client: Client;
 
     /**
      * Constructor
      *
      * @author Fabien Bellanger
-     * @param url: string Server URL
+     * @param {Client} client Client
      */
-    constructor(url: string) {
+    constructor(client: Client) {
+        this._client = client;
+
+        const url = this._getURL();
         console.log(`===> Connecting Socket Client to server on ${url}...`);
 
         this._socket = io(url);
@@ -28,13 +32,33 @@ export class SocketClient {
             console.log('===> Disonnect from server');
         });
 
+        this.sendClientInfo();
+    }
+
+    /**
+     * Construct URL from Client
+     *
+     * @author Fabien Bellanger
+     * @returns {string} URL
+     */
+    private _getURL(): string {
+        let url = this._client.useSSL ? 'wss://' : 'ws://';
+
+        url += `${this._client.ip}:${this._client.port}`;
+
+        return url;
+    }
+
+    /**
+     * Send Client info to the server
+     *
+     * @author Fabien Bellanger
+     */
+    sendClientInfo() {
         this._socket.on('get_client', () => {
             console.log('======> [get_client] Received from server');
 
-            this._socket.emit(
-                'get_client_info',
-                new Client('127.0.0.1', 3333, 'Terminal 2')
-            );
+            this._socket.emit('get_client_info', this._client);
         });
     }
 }

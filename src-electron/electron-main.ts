@@ -1,8 +1,7 @@
-import { app, BrowserWindow, nativeTheme } from 'electron';
+import { app, BrowserWindow, nativeTheme, ipcMain } from 'electron';
 import path from 'path';
 import os from 'os';
-import { SocketServer } from './socket-server';
-import { SocketClient } from './socket-client';
+import { Socket } from './sockets/socket';
 
 // Needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
@@ -53,8 +52,22 @@ function createWindow() {
     });
 
     // WebSockets
-    new SocketServer(3333);
-    new SocketClient('ws://127.0.0.1:3333');
+    // ----------
+    const socket = new Socket('path_to_config_file');
+    socket.start();
+
+    // IPC
+    // ---
+    ipcMain.handle('printAPI:test', () => {
+        console.log('============> TEST PRINT');
+
+        return {};
+    });
+    ipcMain.handle('saleAPI:test', () => {
+        console.log('============> TEST SALE');
+
+        return {};
+    });
 }
 
 app.whenReady().then(createWindow);
