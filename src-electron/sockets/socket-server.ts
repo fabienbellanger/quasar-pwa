@@ -56,10 +56,12 @@ class SocketServer {
     private addClient(socket: Socket) {
         socket.emit('get_client');
         socket.on('get_client_info', (client: Client) => {
-            console.log('======> [get_client_info] Receive client info...');
+            console.log(
+                '======> [get_client_info] Receive client info...' + client.ip
+            );
             this.clients[socket.id] = client;
 
-            console.log(this.clients);
+            // console.log(this.clients);
         });
     }
 }

@@ -62,7 +62,9 @@ export class SocketClient {
      */
     sendClientInfo() {
         this._socket.on('get_client', () => {
-            console.log('======> [get_client] Received from server');
+            console.log(
+                '======> [get_client] Received from server ' + this._client.ip
+            );
 
             this._socket.emit('get_client_info', this._client);
         });

@@ -1,4 +1,4 @@
-import { SocketServer, Clients } from './socket-server';
+import { SocketServer } from './socket-server';
 import { SocketClient } from './socket-client';
 import serversList from '../../local-ws-servers.json';
 
@@ -63,6 +63,7 @@ class Socket {
         // Liste des clients issue d'un fichier de config
         const servers = serversList as Client[];
         for (const server of servers) {
+            console.log('------', server);
             new SocketClient(server);
         }
     }
