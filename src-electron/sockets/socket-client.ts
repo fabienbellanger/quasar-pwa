@@ -29,8 +29,13 @@ export class SocketClient {
         });
 
         this._socket.on('disconnect', () => {
-            console.log('===> Disonnect from server');
+            console.log('===> Disconnect from server');
         });
+
+        // this._socket.on('connect_error', () => {
+        //     //
+        //     console.log('===> Error when connecting to the server');
+        // });
 
         this.sendClientInfo();
     }
@@ -39,6 +44,7 @@ export class SocketClient {
      * Construct URL from Client
      *
      * @author Fabien Bellanger
+     * @private
      * @returns {string} URL
      */
     private _getURL(): string {

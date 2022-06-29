@@ -1,5 +1,6 @@
 import { Client, SocketServer } from './socket-server';
 import { SocketClient } from './socket-client';
+import serversList from '../../local-ws-servers.json';
 
 /**
  * Socket class
@@ -25,10 +26,9 @@ class Socket {
 
         // Start clients
         // Liste des clients issue d'un fichier de config
-        for (let i = 0; i < 3; i++) {
-            new SocketClient(
-                new Client('127.0.0.1', 3333, `Self ${i + 1}`, false)
-            );
+        const servers = serversList as Client[];
+        for (const server of servers) {
+            new SocketClient(server);
         }
     }
 }

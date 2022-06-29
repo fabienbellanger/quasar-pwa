@@ -19,6 +19,18 @@
 import { contextBridge } from 'electron';
 import { ipcRenderer } from 'electron/renderer';
 
+contextBridge.exposeInMainWorld('appAPI', {
+    ip: () =>
+        ipcRenderer
+            .invoke('appAPI:ip')
+            .then((ip: string | undefined) => {
+                return ip;
+            })
+            .catch((error) => {
+                return error;
+            }),
+});
+
 contextBridge.exposeInMainWorld('printAPI', {
     test: () =>
         ipcRenderer

@@ -18,6 +18,12 @@
 
             <q-separator />
 
+            <q-card-section>
+                IP: <b>{{ ip }}</b>
+            </q-card-section>
+
+            <q-separator />
+
             <q-card-actions>
                 <q-btn
                     color="secondary"
@@ -44,6 +50,7 @@ export default defineComponent({
         // ---------
         const localForageValue = ref<string>('...');
         const localForageInput = ref<string>('');
+        const ip = ref<string>('');
 
         // Functions
         // ---------
@@ -90,11 +97,32 @@ export default defineComponent({
             (window as any).saleAPI.test();
         };
 
+        const getIP = () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).appAPI
+                .ip()
+                .then((_ip: string | undefined) => {
+                    if (_ip !== undefined) {
+                        ip.value = _ip;
+                    } else {
+                        console.error('Undefined IP address');
+                    }
+                })
+                .catch((error: Error) => {
+                    console.error(error);
+                });
+        };
+
+        // Startup
+        // -------
+        getIP();
+
         return {
             setLocalForageValue,
             localForageValue,
             localForageInput,
             ipc_test,
+            ip,
         };
     },
 });

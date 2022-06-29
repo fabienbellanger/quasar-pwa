@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@quasar/extras": "^1.14.1",
+        "ip": "^1.1.8",
         "localforage": "^1.10.0",
         "quasar": "^2.7.3",
         "socket.io": "^4.5.1",
