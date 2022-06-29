@@ -18,7 +18,8 @@
 
             <q-separator />
             <q-card-section>
-                IP: <b>{{ ip }}</b>
+                <div class="text-h6">IP</div>
+                <div>{{ ip }}</div>
             </q-card-section>
 
             <q-separator v-if="servers !== undefined && servers.length !== 0" />
@@ -49,7 +50,11 @@
                     label="Set value with localForage"
                     @click="setLocalForageValue"
                 ></q-btn>
-                <q-btn @click="ipc_test" label="Test IPC"></q-btn>
+                <q-btn
+                    color="primary"
+                    @click="ipc_test"
+                    label="Test IPC"
+                ></q-btn>
             </q-card-actions>
         </q-card>
     </q-page>
