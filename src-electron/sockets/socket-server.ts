@@ -1,33 +1,5 @@
 import { Server, Socket } from 'socket.io';
-
-/**
- * Client class
- *
- * @author Fabien Bellanger
- */
-class Client {
-    public ip: string;
-    public port: number;
-    public name: string;
-    public type: string;
-    public useSSL: boolean;
-
-    /**
-     * Constructor
-     *
-     * @author Fabien Bellanger
-     * @param {string} ip IP
-     * @param {number} port Port
-     * @param {string} name Name
-     */
-    constructor(ip: string, port: number, name: string, useSSL: boolean) {
-        this.ip = ip;
-        this.port = port;
-        this.name = name;
-        this.type = 'pos';
-        this.useSSL = useSSL;
-    }
-}
+import { Client } from './socket';
 
 /**
  * HashMap of Client
@@ -67,6 +39,8 @@ class SocketServer {
 
             socket.on('disconnect', (reason) => {
                 console.log(`===> Client disconnected for reason: ${reason}`);
+
+                delete this.clients[socket.id];
             });
 
             this.addClient(socket);

@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import { Client } from './socket-server';
+import { Client } from './socket';
 
 /**
  * SocketClient class

@@ -20,11 +20,23 @@ import { contextBridge } from 'electron';
 import { ipcRenderer } from 'electron/renderer';
 
 contextBridge.exposeInMainWorld('appAPI', {
+    // Get local IP address
     ip: () =>
         ipcRenderer
             .invoke('appAPI:ip')
             .then((ip: string | undefined) => {
                 return ip;
+            })
+            .catch((error) => {
+                return error;
+            }),
+
+    // List all connected server
+    connectedServers: () =>
+        ipcRenderer
+            .invoke('appAPI:connected-servers')
+            .then((servers) => {
+                return servers;
             })
             .catch((error) => {
                 return error;

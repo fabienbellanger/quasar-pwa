@@ -7,9 +7,9 @@
         "useSSL": false
     },
     {
-        "ip": "192.168.1.1",
-        "port": 3338,
-        "name": "Production 1",
+        "ip": "192.168.1.104",
+        "port": 3333,
+        "name": "Terminal 2",
         "type": "pos",
         "useSSL": false
     }

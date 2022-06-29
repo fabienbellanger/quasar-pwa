@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron';
 import ip from 'ip';
+import { Socket } from '../sockets/socket';
 
 /**
  * IPC class
@@ -13,7 +14,7 @@ class IPC {
      * @author Fabien Bellanger
      * @static
      */
-    static start() {
+    static start(socket: Socket) {
         ipcMain.handle('printAPI:test', () => {
             console.log('============> [IPC][printAPI] TEST PRINT');
 
@@ -28,6 +29,10 @@ class IPC {
 
         ipcMain.handle('appAPI:ip', () => {
             return ip.address();
+        });
+
+        ipcMain.handle('appAPI:connected-servers', () => {
+            return socket.servers();
         });
     }
 }

@@ -59,7 +59,7 @@ function createWindow() {
 
     // IPC
     // ---
-    IPC.start();
+    IPC.start(socket);
 }
 
 app.whenReady().then(createWindow);

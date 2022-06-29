@@ -17,13 +17,32 @@
             </q-card-section>
 
             <q-separator />
-
             <q-card-section>
                 IP: <b>{{ ip }}</b>
             </q-card-section>
 
-            <q-separator />
+            <q-separator v-if="servers !== undefined && servers.length !== 0" />
+            <q-card-section
+                v-if="servers !== undefined && servers.length !== 0"
+            >
+                <div class="text-h6">Servers list</div>
+                <q-list bordered separator>
+                    <q-item v-for="server in servers" :key="server.ip">
+                        <q-item-section>
+                            <q-item-label
+                                >{{ server.name }} ({{
+                                    server.type
+                                }})</q-item-label
+                            >
+                            <q-item-label caption>
+                                {{ server.ip }}:{{ server.port }}
+                            </q-item-label>
+                        </q-item-section>
+                    </q-item>
+                </q-list>
+            </q-card-section>
 
+            <q-separator />
             <q-card-actions>
                 <q-btn
                     color="secondary"
@@ -40,6 +59,7 @@
 import { defineComponent, ref } from 'vue';
 import localforage from 'localforage';
 import Storage from '../utils/Storage';
+import { Client } from '../../src-electron/sockets/socket';
 
 export default defineComponent({
     name: 'IndexPage',
@@ -51,6 +71,7 @@ export default defineComponent({
         const localForageValue = ref<string>('...');
         const localForageInput = ref<string>('');
         const ip = ref<string>('');
+        const servers = ref<Client[]>([]);
 
         // Functions
         // ---------
@@ -90,11 +111,24 @@ export default defineComponent({
         const ipc_test = () => {
             console.log('Test IPC');
 
+            getIP();
+            connectedServers();
+
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).printAPI.test();
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (window as any).saleAPI.test();
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).appAPI
+                .connectedServers()
+                .then((list: Client[]) => {
+                    console.log(list);
+                })
+                .catch((error: Error) => {
+                    console.error(error);
+                });
         };
 
         const getIP = () => {
@@ -113,9 +147,22 @@ export default defineComponent({
                 });
         };
 
+        const connectedServers = () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (window as any).appAPI
+                .connectedServers()
+                .then((_servers: Client[]) => {
+                    servers.value = _servers;
+                })
+                .catch((error: Error) => {
+                    console.error(error);
+                });
+        };
+
         // Startup
         // -------
         getIP();
+        connectedServers();
 
         return {
             setLocalForageValue,
@@ -123,6 +170,7 @@ export default defineComponent({
             localForageInput,
             ipc_test,
             ip,
+            servers,
         };
     },
 });
