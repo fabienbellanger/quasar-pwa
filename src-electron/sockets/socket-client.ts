@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import { Client } from './socket';
+import Device from '../device';
 
 /**
  * SocketClient class
@@ -8,16 +8,16 @@ import { Client } from './socket';
  */
 export class SocketClient {
     private _socket: Socket;
-    private _client: Client;
+    private _device: Device;
 
     /**
      * Constructor
      *
      * @author Fabien Bellanger
-     * @param {Client} client Client
+     * @param {Device} device Device
      */
-    constructor(client: Client) {
-        this._client = client;
+    constructor(device: Device) {
+        this._device = device;
 
         const url = this._getURL();
         console.log(`===> Connecting Socket Client to server on ${url}...`);
@@ -37,36 +37,36 @@ export class SocketClient {
         //     console.log('===> Error when connecting to the server');
         // });
 
-        this.sendClientInfo();
+        this.sendDeviceInfo();
     }
 
     /**
-     * Construct URL from Client
+     * Construct URL
      *
      * @author Fabien Bellanger
      * @private
      * @returns {string} URL
      */
     private _getURL(): string {
-        let url = this._client.useSSL ? 'wss://' : 'ws://';
+        let url = this._device.useSSL ? 'wss://' : 'ws://';
 
-        url += `${this._client.ip}:${this._client.port}`;
+        url += `${this._device.ip}:${this._device.port}`;
 
         return url;
     }
 
     /**
-     * Send Client info to the server
+     * Send device info to the server
      *
      * @author Fabien Bellanger
      */
-    sendClientInfo() {
-        this._socket.on('get_client', () => {
+    sendDeviceInfo() {
+        this._socket.on('get_device', () => {
             console.log(
-                '======> [get_client] Received from server ' + this._client.ip
+                '======> [get_device] Received from server ' + this._device.ip
             );
 
-            this._socket.emit('get_client_info', this._client);
+            this._socket.emit('get_device_info', this._device);
         });
     }
 }

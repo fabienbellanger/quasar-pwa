@@ -1,13 +1,13 @@
 import { Server, Socket } from 'socket.io';
-import { Client } from './socket';
+import Device from '../device';
 
 /**
- * HashMap of Client
+ * HashMap of Device
  *
  * @author Fabien Bellanger
  */
-interface Clients {
-    [socketId: string]: Client;
+interface Devices {
+    [socketId: string]: Device;
 }
 
 /**
@@ -17,7 +17,7 @@ interface Clients {
  */
 class SocketServer {
     private _io: Server;
-    clients: Clients;
+    devices: Devices;
 
     /**
      * Constructor
@@ -32,7 +32,7 @@ class SocketServer {
             /* options */
         });
 
-        this.clients = {};
+        this.devices = {};
 
         this._io.on('connection', (socket) => {
             console.log('======> Client connected... | ID: ', socket.id);
@@ -40,7 +40,7 @@ class SocketServer {
             socket.on('disconnect', (reason) => {
                 console.log(`===> Client disconnected for reason: ${reason}`);
 
-                delete this.clients[socket.id];
+                delete this.devices[socket.id];
             });
 
             this.addClient(socket);
@@ -48,22 +48,22 @@ class SocketServer {
     }
 
     /**
-     * Add client clients list
+     * Add client devices list
      *
      * @author Fabien Bellanger
      * @param {Socket} socket Socket
      */
     private addClient(socket: Socket) {
         socket.emit('get_client');
-        socket.on('get_client_info', (client: Client) => {
+        socket.on('get_client_info', (client: Device) => {
             console.log(
                 '======> [get_client_info] Receive client info...' + client.ip
             );
-            this.clients[socket.id] = client;
+            this.devices[socket.id] = client;
 
-            // console.log(this.clients);
+            // console.log(this.devices);
         });
     }
 }
 
-export { Client, Clients, SocketServer };
+export { Devices, SocketServer };
