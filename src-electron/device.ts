@@ -19,11 +19,17 @@ export default class Device {
      * @param {string} name Name
      * @param {boolean} useSSL Use SSL?
      */
-    constructor(ip: string, port: number, name: string, useSSL: boolean) {
+    constructor(
+        ip: string,
+        port: number,
+        name: string,
+        type: string,
+        useSSL: boolean
+    ) {
         this.ip = ip;
         this.port = port;
         this.name = name;
-        this.type = 'pos';
+        this.type = type;
         this.useSSL = useSSL;
     }
 }

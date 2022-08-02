@@ -32,7 +32,7 @@ class IPC {
         });
 
         ipcMain.handle('appAPI:connected-servers', () => {
-            return socket.servers();
+            return {}; // socket.servers();
         });
     }
 }

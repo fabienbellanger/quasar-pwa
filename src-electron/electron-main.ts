@@ -54,7 +54,7 @@ function createWindow() {
 
     // WebSockets
     // ----------
-    const socket = new Socket('path_to_config_file');
+    const socket = new Socket();
     socket.start();
 
     // IPC

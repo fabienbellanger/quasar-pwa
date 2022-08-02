@@ -1,4 +1,5 @@
 import { Server, Socket } from 'socket.io';
+import Config from '../config';
 import Device from '../device';
 
 /**
@@ -26,12 +27,21 @@ class SocketServer {
      * @param {number} port Server port
      */
     constructor(port: number) {
-        console.log(`===> Starting Socket Server on port ${port}...`);
+        // Configuration
+        // -------------
+        const configFile = Config.getInstance();
+        console.log(configFile);
 
+        // Lancement serveur
+        // -----------------
+        port = configFile.device.port ?? port;
+        console.log(`===> Starting Socket Server on port ${port}...`);
         this._io = new Server(port, {
             /* options */
         });
 
+        // Récupération des devices
+        // ------------------------
         this.devices = {};
 
         this._io.on('connection', (socket) => {
@@ -43,25 +53,25 @@ class SocketServer {
                 delete this.devices[socket.id];
             });
 
-            this.addClient(socket);
+            this.addDevice(socket);
         });
     }
 
     /**
-     * Add client devices list
+     * Add device to devices list
      *
      * @author Fabien Bellanger
      * @param {Socket} socket Socket
      */
-    private addClient(socket: Socket) {
-        socket.emit('get_client');
-        socket.on('get_client_info', (client: Device) => {
+    private addDevice(socket: Socket) {
+        socket.emit('get_device');
+        socket.on('get_device_info', (device: Device) => {
             console.log(
-                '======> [get_client_info] Receive client info...' + client.ip
+                '======> [get_device_info] Receive device info...' + device.ip
             );
-            this.devices[socket.id] = client;
+            this.devices[socket.id] = device;
 
-            // console.log(this.devices);
+            console.log(this.devices);
         });
     }
 }

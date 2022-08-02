@@ -8,18 +8,14 @@ import Device from '../device';
  * @author Fabien Bellanger
  */
 class Socket {
-    private _configFile: string;
     private _server: SocketServer;
 
     /**
      * Constructor
      *
      * @author Fabien Bellanger
-     * @param {string} configFile Config file path
      */
-    constructor(configFile: string) {
-        this._configFile = configFile;
-    }
+    // constructor() {}
 
     /**
      * Start server
