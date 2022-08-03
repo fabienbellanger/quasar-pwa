@@ -1,6 +1,7 @@
 import { SocketServer } from './socket-server';
 import { SocketClient } from './socket-client';
 import Device from '../device';
+import Config from '../config';
 
 /**
  * Socket class
@@ -23,15 +24,23 @@ class Socket {
      * @author Fabien Bellanger
      */
     start() {
+        // Configuration
+        // -------------
+        const configFile = Config.getInstance();
+
         // Start server
-        this._server = new SocketServer(3333);
+        // ------------
+        // TODO: Cover port = 0 case
+        this._server = new SocketServer(configFile.device.port);
+        console.log('Server:', this._server);
 
         // TODO: Start clients
         // Liste des clients issue d'un fichier de config
-        // const servers = serversList as Client[];
-        // for (const server of servers) {
-        //     new SocketClient(server);
-        // }
+        const devices = this._server.devices;
+        console.log('Devices :', devices);
+        for (const id in devices) {
+            new SocketClient(devices[id]);
+        }
     }
 
     /**
