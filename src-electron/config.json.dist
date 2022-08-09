@@ -1,9 +1,14 @@
-[
-    {
-        "ip": "192.168.1.104",
-        "port": 3333,
-        "name": "Terminal 2",
+{
+    "database": {
+        "path": "./test.db"
+    },
+    "device": {
+        "name": "Terminal 1",
         "type": "pos",
-        "useSSL": false
-    }
-]
+        "useSSL": false,
+        "port": 3333
+    },
+    "devicesIPList": [
+        "192.168.1.104"
+    ]
+}

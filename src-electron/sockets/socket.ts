@@ -32,10 +32,9 @@ class Socket {
         // ------------
         // TODO: Cover port = 0 case
         this._server = new SocketServer(configFile.device.port);
-        console.log('Server:', this._server);
 
-        // TODO: Start clients
-        // Liste des clients issue d'un fichier de config
+        // TODO: Connect application to others servers
+        // Liste des clients issue d'un fichier de config (auto ?)
         const devices = this._server.devices;
         console.log('Devices :', devices);
         for (const id in devices) {

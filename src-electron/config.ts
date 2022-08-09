@@ -2,6 +2,10 @@ import Device from './device';
 import configFile from './config.json';
 import ip from 'ip';
 
+interface Database {
+    path: string;
+}
+
 /**
  * Config class
  *
@@ -11,6 +15,7 @@ export default class Config {
     private static instance: Config;
     device: Device;
     devicesIP: string[];
+    database: Database;
 
     /**
      * Constructor
@@ -29,6 +34,7 @@ export default class Config {
                   )
                 : new Device(ip.address(), 0, '', '', false);
         this.devicesIP = configFile.devicesIPList ?? [];
+        this.database = { path: configFile.database.path ?? '' };
     }
 
     /**

@@ -61,7 +61,7 @@ export class SocketClient {
      * @author Fabien Bellanger
      */
     sendDeviceInfo() {
-        this._socket.on('get_device', () => {
+        this._socket.on('add_device', () => {
             console.log(
                 '======> [get_device] Received from server ' + this._device.ip
             );

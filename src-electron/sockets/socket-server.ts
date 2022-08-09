@@ -64,7 +64,7 @@ class SocketServer {
      * @param {Socket} socket Socket
      */
     private addDevice(socket: Socket) {
-        socket.emit('get_device');
+        socket.emit('add_device');
         socket.on('get_device_info', (device: Device) => {
             console.log(
                 '======> [get_device_info] Receive device info...' + device.ip

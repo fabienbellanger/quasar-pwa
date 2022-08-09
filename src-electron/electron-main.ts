@@ -3,6 +3,7 @@ import path from 'path';
 import os from 'os';
 import { Socket } from './sockets/socket';
 import { IPC } from './ipc/ipc';
+import { DB } from './database';
 
 // Needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
@@ -60,6 +61,11 @@ function createWindow() {
     // IPC
     // ---
     IPC.start(socket);
+
+    // Database
+    // --------
+    const db = new DB();
+    db.test();
 }
 
 app.whenReady().then(createWindow);
